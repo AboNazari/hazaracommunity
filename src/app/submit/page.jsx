@@ -28,7 +28,7 @@ function Page() {
                 </div>
 
                 <div className="w-full max-w-lg z-10">
-                    <Image
+                    {/* <Image
                         src="/images/genocide.jpg"
 
                         // Replace with relevant protest image
@@ -36,7 +36,7 @@ function Page() {
                         width={700}
                         height={400}
                         className="rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
-                    />
+                    /> */}
                 </div>
 
                 <div className="mt-10 z-10">
