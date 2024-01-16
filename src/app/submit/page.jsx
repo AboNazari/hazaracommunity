@@ -23,7 +23,7 @@ function Page() {
                         #<span className=''>Stop</span>Hazara<span className='text-red-500'>Genocide</span>
                     </h1>
                     <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-10">
-                        If you don't see your city in the list, submit your city's protest information so we can publish it.
+                        If you don&apos;t see your city in the list, submit your city&apos;s protest information so we can publish it.
                     </p>
                 </div>
 
