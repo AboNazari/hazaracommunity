@@ -30,7 +30,7 @@ function Hero() {
                     href="#cities"
                     className="px-6 py-3 bg-secondary hover:bg-tertiary rounded-full font-bold text-dark shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
                 >
-                    Find Your City's Protest
+                    Find Your City&apos;s Protest
                 </Link>
             </div>
         </div>

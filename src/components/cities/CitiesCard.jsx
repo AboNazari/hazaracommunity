@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 function CitiesCard({ img, country, city, time, date, address, contact, desc }) {
@@ -5,7 +6,7 @@ function CitiesCard({ img, country, city, time, date, address, contact, desc }) 
         <div
 
             className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <img src={img} alt={`${city}`} className="w-full h-48 object-cover object-center" />
+            <Image src={img} alt={`${city}`} width={100} height={100} className="w-full h-48 object-cover object-center" />
             <div className="p-4">
                 <h3 className="font-bold text-lg">{city}, {country}</h3>
                 <p className="text-sm text-gray-600">Date: {date.substring(0, 10)} at {time}</p>
