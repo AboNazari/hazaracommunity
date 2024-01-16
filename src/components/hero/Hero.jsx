@@ -6,7 +6,7 @@ function Hero() {
     return (
         <div className="relative bg-dark text-white min-h-screen flex flex-col items-center justify-center overflow-hidden tablet:mt-10">
             <Image
-                src="/images/hazara.jpg" // Background image
+                src="/images/Hazara.jpg" // Background image
                 alt="Background"
                 layout="fill"
                 objectFit="cover"
