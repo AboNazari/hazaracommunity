@@ -1,45 +1,75 @@
 'use client'
-import React, { useState } from 'react';
-
-const locationData = {
-    USA: ['New York', 'Los Angeles', 'Chicago'],
-    Canada: ['Toronto', 'Vancouver', 'Montreal'],
-    // ... other countries and cities
-};
+import React, { useState, useEffect } from 'react';
+import CitiesCard from '../cities/CitiesCard';
 
 function SearchComponent() {
+    const [locations, setLocations] = useState({});
     const [selectedCountry, setSelectedCountry] = useState('');
     const [cityInput, setCityInput] = useState('');
+    const [foundCityData, setFoundCityData] = useState(null);
     const [countryError, setCountryError] = useState(false);
     const [cityError, setCityError] = useState(false);
-    const [searchResult, setSearchResult] = useState('');
 
-    const countryList = Object.keys(locationData);
-    const citySuggestions = selectedCountry in locationData ? locationData[selectedCountry] : [];
+    useEffect(() => {
+        fetch('/api/cities')
+            .then(response => response.json())
+            .then(data => {
+                const locationData = data.reduce((acc, item) => {
+                    const { country, city } = item;
+                    acc[country] = acc[country] ? [...acc[country], item] : [item];
+                    return acc;
+                }, {});
+                setLocations(locationData);
+            })
+            .catch(error => console.error('Error fetching cities:', error));
+    }, []);
+
+    const countryList = Object.keys(locations);
 
     const handleCountryChange = (e) => {
         const input = e.target.value.trim();
         setSelectedCountry(input);
         setCityInput('');
-        setCountryError(!countryList.map(c => c.toLowerCase()).includes(input.toLowerCase()));
+        setCountryError(false);
+        setCityError(false);
     };
 
     const handleCityChange = (e) => {
-        const input = e.target.value.trim();
-        setCityInput(input);
-        setCityError(!citySuggestions.map(c => c.toLowerCase()).includes(input.toLowerCase()));
+        setCityInput(e.target.value.trim());
+        setCityError(false);
     };
 
     const handleSearch = () => {
-        if (!countryError && !cityError && selectedCountry && cityInput) {
-            setSearchResult(`Searching for events in ${cityInput}, ${selectedCountry}`);
-            // Here, you can add logic to navigate to a specific URL or display search results
+        if (selectedCountry && cityInput) {
+            const countryData = locations[selectedCountry];
+            if (countryData) {
+                const cityData = countryData.find(item => item.city === cityInput);
+                if (cityData) {
+                    setFoundCityData(cityData);
+                } else {
+                    setFoundCityData(null);
+                    setCityError(true);
+                }
+            } else {
+                setCountryError(true);
+                setFoundCityData(null);
+            }
         }
     };
 
+    const renderCountrySuggestions = () => (
+        countryList.map((country, index) => <option key={index} value={country} />)
+    );
+
+    const renderCitySuggestions = () => (
+        selectedCountry in locations ? locations[selectedCountry].map((item, index) => (
+            <option key={index} value={item.city} />
+        )) : []
+    );
+
     return (
         <>
-            <div id="cities" className="flex flex-col items-center justify-center  space-y-4 mt-5 mb-10 p-10">
+            <div id="cities" className="flex flex-col items-center justify-center space-y-4 mt-5 mb-10 p-10">
                 <div className="mb-4 w-full max-w-md ">
                     <h2 className='mb-10 font-bold font-primary tablet:text-3xl leading-8 text-xl' >Search For Your City Protest</h2>
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
@@ -55,9 +85,7 @@ function SearchComponent() {
                     />
                     {countryError && <p className="text-red-500 text-xs italic">Country not found</p>}
                     <datalist id="countrySuggestions">
-                        {countryList.map((country, index) => (
-                            <option key={index} value={country} />
-                        ))}
+                        {countryList.map((country, index) => <option key={index} value={country} />)}
                     </datalist>
                 </div>
 
@@ -77,9 +105,9 @@ function SearchComponent() {
                     />
                     {cityError && <p className="text-red-500 text-xs italic">City not found</p>}
                     <datalist id="citySuggestions">
-                        {citySuggestions.map((city, index) => (
-                            <option key={index} value={city} />
-                        ))}
+                        {selectedCountry in locations ? locations[selectedCountry].map((item, index) => (
+                            <option key={index} value={item.city} />
+                        )) : []}
                     </datalist>
                 </div>
                 {/* Search Button */}
@@ -90,17 +118,11 @@ function SearchComponent() {
                 >
                     Search
                 </button>
-
-
             </div>
+
             {/* Search Result */}
-            {
-                searchResult && (
-                    <div className="p-4 bg-green-100 border border-green-300 rounded-md">
-                        {searchResult}
-                    </div>
-                )
-            }
+            {foundCityData ? (<div className='flex items-center justify-center my-10'> <CitiesCard {...foundCityData} /> </div>) :
+                (countryError || cityError) && <p className="text-red-500 text-xs italic text-center">City or country not found</p>}
         </>
     );
 }
