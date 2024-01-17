@@ -33,6 +33,12 @@ function Hero() {
                     Find Your City&apos;s Protest
                 </Link>
             </div>
+
+            <div className="mt-10 z-10">
+                <Link href="https://docs.google.com/forms/d/e/1FAIpQLScst0OsRxdBWXJziqNjsM3U8XVXXvBU2v1jEirYYpYy7X_XgQ/viewform?usp=sf_link" className="inline-block px-6 py-3 bg-primary hover:bg-tertiary rounded-full font-bold text-dark text-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    Submit Your City info
+                </Link>
+            </div>
         </div>
     )
 }
