@@ -57,15 +57,15 @@ function SearchComponent() {
         }
     };
 
-    const renderCountrySuggestions = () => (
-        countryList.map((country, index) => <option key={index} value={country} />)
-    );
+    // const renderCountrySuggestions = () => (
+    //     countryList.map((country, index) => <option key={index} value={country} />)
+    // );
 
-    const renderCitySuggestions = () => (
-        selectedCountry in locations ? locations[selectedCountry].map((item, index) => (
-            <option key={index} value={item.city} />
-        )) : []
-    );
+    // const renderCitySuggestions = () => (
+    //     selectedCountry in locations ? locations[selectedCountry].map((item, index) => (
+    //         <option key={index} value={item.city} />
+    //     )) : []
+    // );
 
     return (
         <>
