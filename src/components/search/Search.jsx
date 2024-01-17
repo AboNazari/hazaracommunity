@@ -121,7 +121,7 @@ function SearchComponent() {
             </div>
 
             {/* Search Result */}
-            {foundCityData ? (<div className='flex items-center justify-center my-10'> <CitiesCard {...foundCityData} /> </div>) :
+            {foundCityData ? (<div className='flex items-center justify-center my-10 w-[90vw] mx-auto '> <CitiesCard {...foundCityData} /> </div>) :
                 (countryError || cityError) && <p className="text-red-500 text-xs italic text-center">City or country not found</p>}
         </>
     );

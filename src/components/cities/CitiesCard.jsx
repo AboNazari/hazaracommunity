@@ -6,7 +6,7 @@ function CitiesCard({ img, country, city, time, date, address, contact, desc }) 
         <div
 
             className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <Image src={img ? img : "/images/hero.jpg"} alt={`${city}`} width={100} height={100} className="w-full h-[28rem] object-fit object-center" />
+            <Image src={img ? img : "/images/hero.jpg"} alt={`${city}`} width={100} height={100} className="w-full tablet:h-[28rem] h-[20rem] object-fit object-center" />
             <div className="p-4">
                 <h3 className="font-bold text-lg">{city}, {country}</h3>
                 <p className="text-sm text-gray-600">Date: {date.substring(0, 10)} at {time}</p>
